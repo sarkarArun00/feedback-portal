@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Feedback - HealthCare Plus</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .star-rating {
+            display: flex;
+            gap: 4px;
+        }
+        
+        .star {
+            font-size: 20px;
+            color: #d1d5db;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        
+        @media (min-width: 640px) {
+            .star {
+                font-size: 24px;
+            }
+        }
+        
+        .star:hover,
+        .star.active {
+            color: #10b981;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-green-50 to-emerald-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-green-100">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 py-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 sm:w-10 sm:h-10 bg-green-600 rounded-lg flex items-center justify-center">
+                    <svg class="w-4 h-4 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-lg sm:text-xl font-semibold text-gray-900">HealthCare Plus</h1>
+                    <p class="text-xs sm:text-sm text-green-600">Patient Feedback Portal</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 py-4 sm:py-8">
+        <div class="bg-white rounded-xl sm:rounded-2xl shadow-lg border border-green-100 overflow-hidden">
+            <!-- Form Header -->
+            <div class="bg-gradient-to-r from-green-600 to-emerald-600 px-4 sm:px-8 py-4 sm:py-6 text-white">
+                <h2 class="text-xl sm:text-2xl font-semibold mb-2">We Value Your Feedback</h2>
+                <p class="text-sm sm:text-base text-green-100">Help us improve our healthcare services by sharing your experience</p>
+            </div>
+
+            <!-- Feedback Form -->
+            <form id="feedbackForm" class="p-4 sm:p-8 space-y-4 sm:space-y-6">
+                <!-- Patient Information -->
+                <div class="grid sm:grid-cols-2 gap-4 sm:gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                        <input type="text" id="patientName" class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors" placeholder="Enter your full name" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Visit Date</label>
+                        <input type="date" id="visitDate" class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors" required>
+                    </div>
+                </div>
+
+                <!-- Department Selection -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Department Visited</label>
+                    <select id="department" class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors" required>
+                        <option value="">Select Department</option>
+                        <option value="emergency">Emergency Department</option>
+                        <option value="cardiology">Cardiology</option>
+                        <option value="orthopedics">Orthopedics</option>
+                        <option value="pediatrics">Pediatrics</option>
+                        <option value="radiology">Radiology</option>
+                        <option value="laboratory">Laboratory</option>
+                        <option value="pharmacy">Pharmacy</option>
+                        <option value="outpatient">Outpatient Clinic</option>
+                    </select>
+                </div>
+
+                <!-- Overall Rating -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-3">Overall Experience Rating</label>
+                    <div class="star-rating" id="overallRating">
+                        <span class="star" data-rating="1">★</span>
+                        <span class="star" data-rating="2">★</span>
+                        <span class="star" data-rating="3">★</span>
+                        <span class="star" data-rating="4">★</span>
+                        <span class="star" data-rating="5">★</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-1">Click to rate your overall experience</p>
+                </div>
+
+                <!-- Specific Ratings -->
+                <div class="grid sm:grid-cols-2 gap-4 sm:gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2 sm:mb-3">Staff Friendliness</label>
+                        <div class="star-rating" id="staffRating">
+                            <span class="star" data-rating="1">★</span>
+                            <span class="star" data-rating="2">★</span>
+                            <span class="star" data-rating="3">★</span>
+                            <span class="star" data-rating="4">★</span>
+                            <span class="star" data-rating="5">★</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2 sm:mb-3">Wait Time</label>
+                        <div class="star-rating" id="waitTimeRating">
+                            <span class="star" data-rating="1">★</span>
+                            <span class="star" data-rating="2">★</span>
+                            <span class="star" data-rating="3">★</span>
+                            <span class="star" data-rating="4">★</span>
+                            <span class="star" data-rating="5">★</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feedback Categories -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2 sm:mb-3">What would you like to provide feedback about? (Select all that apply)</label>
+                    <div class="grid sm:grid-cols-2 gap-2 sm:gap-3">
+                        <label class="flex items-center space-x-2 sm:space-x-3 p-2 sm:p-3 border border-gray-200 rounded-lg hover:bg-green-50 cursor-pointer transition-colors">
+                            <input type="checkbox" value="medical-care" class="text-green-600 focus:ring-green-500">
+                            <span class="text-xs sm:text-sm">Quality of Medical Care</span>
+                        </label>
+                        <label class="flex items-center space-x-2 sm:space-x-3 p-2 sm:p-3 border border-gray-200 rounded-lg hover:bg-green-50 cursor-pointer transition-colors">
+                            <input type="checkbox" value="communication" class="text-green-600 focus:ring-green-500">
+                            <span class="text-xs sm:text-sm">Communication</span>
+                        </label>
+                        <label class="flex items-center space-x-2 sm:space-x-3 p-2 sm:p-3 border border-gray-200 rounded-lg hover:bg-green-50 cursor-pointer transition-colors">
+                            <input type="checkbox" value="facilities" class="text-green-600 focus:ring-green-500">
+                            <span class="text-xs sm:text-sm">Facilities & Cleanliness</span>
+                        </label>
+                        <label class="flex items-center space-x-2 sm:space-x-3 p-2 sm:p-3 border border-gray-200 rounded-lg hover:bg-green-50 cursor-pointer transition-colors">
+                            <input type="checkbox" value="scheduling" class="text-green-600 focus:ring-green-500">
+                            <span class="text-xs sm:text-sm">Appointment Scheduling</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Comments -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Additional Comments</label>
+                    <textarea id="comments" rows="3" class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors resize-none sm:rows-4" placeholder="Please share any additional feedback or suggestions..."></textarea>
+                </div>
+
+                <!-- Recommendation -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2 sm:mb-3">Would you recommend our healthcare facility to others?</label>
+                    <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="radio" name="recommend" value="yes" class="text-green-600 focus:ring-green-500">
+                            <span class="text-sm">Yes, definitely</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="radio" name="recommend" value="maybe" class="text-green-600 focus:ring-green-500">
+                            <span class="text-sm">Maybe</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="radio" name="recommend" value="no" class="text-green-600 focus:ring-green-500">
+                            <span class="text-sm">No</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="pt-2 sm:pt-4">
+                    <button type="submit" class="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white py-3 sm:py-4 px-4 sm:px-6 text-sm sm:text-base rounded-lg font-medium hover:from-green-700 hover:to-emerald-700 focus:ring-4 focus:ring-green-200 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]">
+                        Submit Feedback
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Success Message (Hidden by default) -->
+        <div id="successMessage" class="hidden bg-white rounded-xl sm:rounded-2xl shadow-lg border border-green-200 p-4 sm:p-8 text-center fade-in mt-4 sm:mt-6">
+            <div class="w-12 h-12 sm:w-16 sm:h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                <svg class="w-6 h-6 sm:w-8 sm:h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+            <h3 class="text-lg sm:text-xl font-semibold text-gray-900 mb-2">Thank You for Your Feedback!</h3>
+            <p class="text-sm sm:text-base text-gray-600 mb-4">Your feedback has been submitted successfully. We appreciate you taking the time to help us improve our healthcare services.</p>
+            <button onclick="resetForm()" class="bg-green-600 text-white px-4 sm:px-6 py-2 text-sm sm:text-base rounded-lg hover:bg-green-700 transition-colors">
+                Submit Another Feedback
+            </button>
+        </div>
+    </main>
+
+    <script>
+        // Star rating functionality
+        function initializeStarRating(containerId) {
+            const container = document.getElementById(containerId);
+            const stars = container.querySelectorAll('.star');
+            let currentRating = 0;
+
+            stars.forEach((star, index) => {
+                star.addEventListener('click', () => {
+                    currentRating = index + 1;
+                    updateStars(stars, currentRating);
+                    container.setAttribute('data-rating', currentRating);
+                });
+
+                star.addEventListener('mouseenter', () => {
+                    updateStars(stars, index + 1);
+                });
+            });
+
+            container.addEventListener('mouseleave', () => {
+                updateStars(stars, currentRating);
+            });
+        }
+
+        function updateStars(stars, rating) {
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        }
+
+        // Initialize all star ratings
+        initializeStarRating('overallRating');
+        initializeStarRating('staffRating');
+        initializeStarRating('waitTimeRating');
+
+        // Form submission
+        document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = {
+                patientName: document.getElementById('patientName').value,
+                visitDate: document.getElementById('visitDate').value,
+                department: document.getElementById('department').value,
+                overallRating: document.getElementById('overallRating').getAttribute('data-rating') || 0,
+                staffRating: document.getElementById('staffRating').getAttribute('data-rating') || 0,
+                waitTimeRating: document.getElementById('waitTimeRating').getAttribute('data-rating') || 0,
+                comments: document.getElementById('comments').value,
+                recommend: document.querySelector('input[name="recommend"]:checked')?.value || '',
+                categories: Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map(cb => cb.value)
+            };
+
+            // Validate required ratings
+            if (formData.overallRating == 0) {
+                alert('Please provide an overall experience rating.');
+                return;
+            }
+
+            // Show success message
+            document.querySelector('main > div:first-child').style.display = 'none';
+            document.getElementById('successMessage').classList.remove('hidden');
+            
+            // Scroll to success message
+            document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Reset form function
+        function resetForm() {
+            document.getElementById('feedbackForm').reset();
+            
+            // Reset star ratings
+            ['overallRating', 'staffRating', 'waitTimeRating'].forEach(id => {
+                const container = document.getElementById(id);
+                const stars = container.querySelectorAll('.star');
+                stars.forEach(star => star.classList.remove('active'));
+                container.removeAttribute('data-rating');
+            });
+            
+            // Show form again
+            document.querySelector('main > div:first-child').style.display = 'block';
+            document.getElementById('successMessage').classList.add('hidden');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Set today's date as default
+        document.getElementById('visitDate').valueAsDate = new Date();
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97866200700f33c0',t:'MTc1Njc0NjY0NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
